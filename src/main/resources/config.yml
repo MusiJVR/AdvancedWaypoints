@@ -1,0 +1,138 @@
+database:
+  type: 'sqlite' # Available types: sqlite, mysql
+  ip: 'localhost'
+  dbname: 'dbname'
+  username: 'username'
+  password: 'password'
+  port: 3306
+  properties: 'verifyServerCertificate=false&useSSL=false&useUnicode=true&characterEncoding=utf8'
+  maximum_pool_size: 10
+  connection_timeout_ms: 10000
+
+# Available styles for custom labels are listed here
+waypoint_styles:
+  - 'advancedwaypoints:flag'
+  - 'advancedwaypoints:portal'
+  - 'advancedwaypoints:farm'
+  - 'advancedwaypoints:house'
+  - 'advancedwaypoints:castle'
+
+# The default alias is 'point'
+command_aliases:
+  - 'aw'
+  - 'ap'
+  - 'apoint'
+  - 'awaypoint'
+
+# Notify players with 'advancedwaypoints.update_listener' permission about plugin updates
+send_update_notifications: true
+
+messages:
+  new_version_available: "<b><color:#e74b33>AdvancedWaypoints</color></b> <color:#c4b6a4>has been updated!</color>
+  <br><color:#fbd300>New version:</color> <click:open_url:'<url>'><hover:show_text:'Visit Modrinth page'><b><color:#c4b6a4><new_version></color></b></hover></click>
+  <br><color:#fbd300>Current version:</color> <b><color:#c4b6a4><current_version></color></b>
+  "
+
+  point:
+    usage: "<color:#fbd300>Usage:</color> <color:#c4b6a4><hover:show_text:'Click to use /point'><click:suggest_command:'/point '>/point <action> [args]</click></hover></color>"
+    command_failed: '<color:#e74b33>Warning</color> <color:#c4b6a4>Failed to execute the command!</color>'
+    player_not_found: '<color:#e74b33>Warning</color> <color:#c4b6a4>Player not found or their name is ambiguous!</color>'
+    copy_uuid: '<color:#fbd300>Click to copy the waypoint UUID</color>'
+
+    reload:
+      reload_successfully: '<color:#fbd300>Notification</color> <color:#c4b6a4>Plugin configuration successfully reloaded!</color>'
+
+    resourcepack:
+      usage: "<color:#fbd300>Usage:</color> <color:#c4b6a4><hover:show_text:'Click to use /point resourcepack'><click:suggest_command:'/point resourcepack '>/point resourcepack <action></click></hover></color>"
+      generate_success: '<color:#fbd300>Notification</color> <color:#c4b6a4>Default resource pack assets successfully generated!</color>'
+      build_success: "<color:#fbd300>Notification</color> <color:#c4b6a4>Resource pack successfully built: <hover:show_text:'Click to copy path'><click:copy_to_clipboard:'resourcepack/build/resourcepack.zip'>resourcepack/build/resourcepack.zip</click></hover></color>"
+      processing_failed: '<color:#e74b33>Warning</color> <color:#c4b6a4>Failed to perform the resource pack operation. See the server console for details.</color>'
+
+    limit:
+      usage: '<color:#fbd300>Usage:</color> <color:#c4b6a4>/point limit <name> <amount from 0></color>'
+      limit_updated: '<color:#fbd300>Notification</color> <color:#c4b6a4>Player <player>''s waypoint limit has been changed to <limit>!</color>'
+
+    personal:
+      usage: '<color:#fbd300>Usage:</color> <color:#c4b6a4>/point personal <info | color | reset> [args]</color>'
+      info: "<color:#fbd300>Notification</color> <color:#c4b6a4>Your personal waypoint color:</color> <color:#<hex>><hover:show_text:'Copy color'><click:copy_to_clipboard:'<hex>'><hex></click></hover></color>"
+      invalid_color: '<color:#e74b33>Warning</color> <color:#c4b6a4>Enter a six-character HEX color without #, for example FFFFFF!</color>'
+      color_updated: "<color:#fbd300>Notification</color> <color:#c4b6a4>Your personal waypoint color has been changed to</color> <color:#<hex>><hover:show_text:'Copy color'><click:copy_to_clipboard:'<hex>'><hex></click></hover></color>"
+      reset:
+        color: '<color:#fbd300>Notification</color> <color:#c4b6a4>Your personal waypoint color has been successfully reset!</color>'
+
+    create:
+      usage: '<color:#fbd300>Usage:</color> <color:#c4b6a4>/point create <style></color>'
+      limit_reached: '<color:#e74b33>Warning</color> <color:#c4b6a4>You have reached your waypoint limit!</color>'
+      unknown_style: '<color:#e74b33>Warning</color> <color:#c4b6a4>This waypoint style is unavailable!</color>'
+      created_successfully: '<color:#fbd300>Notification</color> <color:#c4b6a4>Waypoint <uuid> created! Style: <style>, coordinates: <x> <y> <z>.</color>'
+
+    remove:
+      usage: '<color:#fbd300>Usage:</color> <color:#c4b6a4>/point remove <uuid></color>'
+      invalid_uuid: '<color:#e74b33>Warning</color> <color:#c4b6a4>Enter a valid waypoint UUID!</color>'
+      not_found: '<color:#e74b33>Warning</color> <color:#c4b6a4>Waypoint not found or belongs to another player!</color>'
+      removed_successfully: '<color:#fbd300>Notification</color> <color:#c4b6a4>Waypoint successfully removed!</color>'
+
+    list:
+      page_not_found: '<color:#e74b33>Warning</color> <color:#c4b6a4>You do not have that many waypoints - this page does not exist!</color>'
+      pagination: '<previous> <color:#c4b6a4>Page <page> of <pages></color> <next>'
+      previous: "<color:#fbd300><hover:show_text:'Previous page'>←</hover></color>"
+      next: "<color:#fbd300><hover:show_text:'Next page'>→</hover></color>"
+      previous_disabled: '<color:#777777>←</color>'
+      next_disabled: '<color:#777777>→</color>'
+      empty: '<color:#fbd300>Notification</color> <color:#c4b6a4>You have no visible waypoints!</color>'
+      header: '<color:#fbd300>Notification</color> <color:#c4b6a4>Available waypoints: <count></color>'
+      entry: '<color:#fbd300><uuid></color> <color:#c4b6a4>World: <world>, coordinates: <x> <y> <z>, style: <style></color>'
+
+    modify:
+      usage: '<color:#fbd300>Usage:</color> <color:#c4b6a4>/point modify <uuid> <style|add|remove> <style|name></color>'
+      owner_required: '<color:#e74b33>Warning</color> <color:#c4b6a4>You cannot remove the owner from the waypoint visibility list!</color>'
+      modified_successfully: '<color:#fbd300>Notification</color> <color:#c4b6a4>Waypoint successfully modified!</color>'
+
+    help: "<b><color:#c4b6a4>⏴-------</color><color:#fbd300>AdvancedWaypoints</color><color:#c4b6a4>-------⏵</color></b>
+    
+    <color:#fbd300>Command:</color> <color:#c4b6a4><hover:show_text:'Click to use command'><click:suggest_command:'/point help'>/point help</click></hover></color>
+    
+    <color:#fbd300>Description:</color> <color:#c4b6a4>This command allows you to display all possible plugin commands</color>
+    
+    
+    <color:#fbd300>Command:</color> <color:#c4b6a4><hover:show_text:'Click to use command'><click:suggest_command:'/point reload'>/point reload</click></hover></color>
+    
+    <color:#fbd300>Description:</color> <color:#c4b6a4>This command allows you to reload the plugin config</color>
+    
+    
+    <color:#fbd300>Command:</color> <color:#c4b6a4><hover:show_text:'Click to use command'><click:suggest_command:'/point resourcepack '>/point resourcepack <action></click></hover></color>
+    
+    <color:#fbd300>Description:</color> <color:#c4b6a4>This command allows you to generate a resource pack with custom waypoints</color>
+    
+    
+    <color:#fbd300>Command:</color> <color:#c4b6a4><hover:show_text:'Click to use command'><click:suggest_command:'/point limit '>/point limit <player> <limit></click></hover></color>
+    
+    <color:#fbd300>Description:</color> <color:#c4b6a4>This command allows you to set a limit on waypoints for a player</color>
+    
+    
+    <color:#fbd300>Command:</color> <color:#c4b6a4><hover:show_text:'Click to use command'><click:suggest_command:'/point personal '>/point personal <action> [args]</click></hover></color>
+    
+    <color:#fbd300>Description:</color> <color:#c4b6a4>This command allows you to manage a personal waypoint</color>
+    
+    
+    <color:#fbd300>Command:</color> <color:#c4b6a4><hover:show_text:'Click to use command'><click:suggest_command:'/point create '>/point create <style></click></hover></color>
+    
+    <color:#fbd300>Description:</color> <color:#c4b6a4>This command allows you to create a custom waypoint</color>
+    
+    
+    <color:#fbd300>Command:</color> <color:#c4b6a4><hover:show_text:'Click to use command'><click:suggest_command:'/point remove '>/point remove <uuid></click></hover></color>
+    
+    <color:#fbd300>Description:</color> <color:#c4b6a4>This command allows you to remove a custom waypoint</color>
+    
+    
+    <color:#fbd300>Command:</color> <color:#c4b6a4><hover:show_text:'Click to use command'><click:suggest_command:'/point list '>/point list [page]</click></hover></color>
+    
+    <color:#fbd300>Description:</color> <color:#c4b6a4>This command allows you to view a list of your custom waypoints</color>
+    
+    
+    <color:#fbd300>Command:</color> <color:#c4b6a4><hover:show_text:'Click to use command'><click:suggest_command:'/point modify '>/point modify <uuid> <action> [args]</click></hover></color>
+    
+    <color:#fbd300>Description:</color> <color:#c4b6a4>This command allows you to modify a custom waypoint</color>
+    
+    <b><color:#c4b6a4>⏴----------------------------⏵</color></b>
+    "

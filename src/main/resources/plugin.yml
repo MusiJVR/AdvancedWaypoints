@@ -1,0 +1,46 @@
+name: '${name}'
+prefix: '${prefix}'
+description: '${description}'
+version: '${version}'
+
+main: com.mousejava.advancedwaypoints.AdvancedWaypoints
+api-version: '${apiVersion}'
+folia-supported: true
+load: POSTWORLD
+
+authors: [ ${authors} ]
+
+permissions:
+  advancedwaypoints.update_listener:
+    description: Permission to receive update notifications
+    default: op
+  advancedwaypoints.use:
+    description: Permission to use commands
+    default: true
+  advancedwaypoints.help:
+    description: Permission to use command help
+    default: true
+  advancedwaypoints.reload:
+    description: Permission to use command reload
+    default: op
+  advancedwaypoints.resourcepack:
+    description: Permission to use command resourcepack
+    default: op
+  advancedwaypoints.limit:
+    description: Permission to use command limit
+    default: op
+  advancedwaypoints.personal:
+    description: Permission to use command personal
+    default: true
+  advancedwaypoints.create:
+    description: Permission to use command create
+    default: true
+  advancedwaypoints.remove:
+    description: Permission to use command remove
+    default: true
+  advancedwaypoints.list:
+    description: Permission to use command list
+    default: true
+  advancedwaypoints.modify:
+    description: Permission to use command modify
+    default: true

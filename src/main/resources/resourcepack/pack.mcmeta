@@ -1,0 +1,7 @@
+{
+  "pack": {
+    "description": "Resource pack by AdvancedWaypoints",
+    "min_format": [<major>, <minor>],
+    "max_format": [<major>, <minor>]
+  }
+}

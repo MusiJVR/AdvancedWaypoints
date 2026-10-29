@@ -1,0 +1,30 @@
+[
+  {
+    "platform": "paper",
+    "versions": [
+      { "version": "1.21.11" },
+      { "version": "26.3" }
+    ]
+  },
+  {
+    "platform": "folia",
+    "versions": [
+      { "version": "1.21.11" },
+      { "version": "26.3" }
+    ]
+  },
+  {
+    "platform": "purpur",
+    "versions": [
+      { "version": "1.21.11" },
+      { "version": "26.3" }
+    ]
+  },
+  {
+    "platform": "leaf",
+    "versions": [
+      { "version": "1.21.11" },
+      { "version": "26.3" }
+    ]
+  }
+]
