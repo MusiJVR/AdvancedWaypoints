@@ -1,4 +1,4 @@
-package com.mousejava.advancedwaypoints.utils;
+package com.mousejava.advancedwaypoints.util;
 
 import io.papermc.paper.ServerBuildInfo;
 import io.papermc.paper.threadedregions.scheduler.ScheduledTask;

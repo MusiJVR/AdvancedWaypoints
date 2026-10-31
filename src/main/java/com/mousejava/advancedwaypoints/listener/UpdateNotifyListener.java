@@ -1,8 +1,8 @@
 package com.mousejava.advancedwaypoints.listener;
 
 import com.mousejava.advancedwaypoints.service.UpdateCheckerService;
-import com.mousejava.advancedwaypoints.utils.MessageUtils;
-import com.mousejava.advancedwaypoints.utils.Scheduler;
+import com.mousejava.advancedwaypoints.util.MessageUtil;
+import com.mousejava.advancedwaypoints.util.Scheduler;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -37,7 +37,7 @@ public class UpdateNotifyListener implements Listener {
         String latest = UpdateCheckerService.getLatestVersion();
         String url = UpdateCheckerService.getDownloadUrl();
 
-        MessageUtils.sendMiniMessageTransformed(player, "messages.new_version_available",
+        MessageUtil.sendMiniMessageTransformed(player, "messages.new_version_available",
                 msg -> msg
                         .replace("<current_version>", current)
                         .replace("<new_version>", latest)

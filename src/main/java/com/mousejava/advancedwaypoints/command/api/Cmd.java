@@ -12,7 +12,7 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.Suggestion;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import com.mojang.brigadier.suggestion.Suggestions;
-import com.mousejava.advancedwaypoints.utils.MessageUtils;
+import com.mousejava.advancedwaypoints.util.MessageUtil;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import org.bukkit.Bukkit;
@@ -68,7 +68,7 @@ public final class Cmd {
 
     public static LiteralArgumentBuilder<CommandSourceStack> playerCommand(String name, String permission, String message) {
         return executesPlayer(playerOnly(name, permission), ((ctx, player) -> {
-            MessageUtils.sendMiniMessageIfPresent(player, message);
+            MessageUtil.sendMiniMessageIfPresent(player, message);
             return Command.SINGLE_SUCCESS;
         }));
     }
@@ -96,7 +96,7 @@ public final class Cmd {
 
     public static LiteralArgumentBuilder<CommandSourceStack> senderCommand(String name, String permission, String message) {
         return executesSender(literal(name, permission), ((ctx, sender) -> {
-            MessageUtils.sendMiniMessageIfPresent(sender, message);
+            MessageUtil.sendMiniMessageIfPresent(sender, message);
             return Command.SINGLE_SUCCESS;
         }));
     }
@@ -110,7 +110,7 @@ public final class Cmd {
     }
 
     public static int usage(CommandSender sender, String message) {
-        MessageUtils.sendMiniMessageIfPresent(sender, message);
+        MessageUtil.sendMiniMessageIfPresent(sender, message);
         return Command.SINGLE_SUCCESS;
     }
 

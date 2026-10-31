@@ -1,6 +1,6 @@
 package com.mousejava.advancedwaypoints.service;
 
-import com.mousejava.advancedwaypoints.utils.Scheduler;
+import com.mousejava.advancedwaypoints.util.Scheduler;
 import net.minecraft.util.ARGB;
 import net.minecraft.world.waypoints.Waypoint;
 import org.bukkit.Bukkit;

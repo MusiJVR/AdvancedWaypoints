@@ -2,7 +2,7 @@ package com.mousejava.advancedwaypoints.service;
 
 import com.mousejava.advancedwaypoints.database.repository.WaypointsRepository;
 import com.mousejava.advancedwaypoints.model.Waypoint;
-import com.mousejava.advancedwaypoints.utils.Scheduler;
+import com.mousejava.advancedwaypoints.util.Scheduler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.game.ClientboundTrackedWaypointPacket;
 import net.minecraft.resources.Identifier;

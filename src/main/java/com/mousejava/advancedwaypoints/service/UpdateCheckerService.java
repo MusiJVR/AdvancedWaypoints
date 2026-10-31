@@ -3,7 +3,7 @@ package com.mousejava.advancedwaypoints.service;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.mousejava.advancedwaypoints.utils.Scheduler;
+import com.mousejava.advancedwaypoints.util.Scheduler;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;

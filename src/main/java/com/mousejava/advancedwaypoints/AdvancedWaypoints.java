@@ -9,8 +9,8 @@ import com.mousejava.advancedwaypoints.database.dialect.*;
 import com.mousejava.advancedwaypoints.database.repository.*;
 import com.mousejava.advancedwaypoints.listener.UpdateNotifyListener;
 import com.mousejava.advancedwaypoints.service.*;
-import com.mousejava.advancedwaypoints.utils.MessageUtils;
-import com.mousejava.advancedwaypoints.utils.Scheduler;
+import com.mousejava.advancedwaypoints.util.MessageUtil;
+import com.mousejava.advancedwaypoints.util.Scheduler;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import org.bukkit.event.Listener;
@@ -36,7 +36,7 @@ public final class AdvancedWaypoints extends JavaPlugin {
     public void onEnable() {
         saveDefaultConfig();
         Scheduler.init(this);
-        MessageUtils.init(this);
+        MessageUtil.init(this);
         BStatsMetricsService.init(this, SERVICE_ID);
         UpdateCheckerService.init(this, PROJECT_ID);
 

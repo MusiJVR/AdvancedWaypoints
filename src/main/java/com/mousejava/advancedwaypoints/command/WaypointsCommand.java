@@ -16,8 +16,8 @@ import com.mousejava.advancedwaypoints.service.PersonalWaypointService;
 import com.mousejava.advancedwaypoints.service.PlayersService;
 import com.mousejava.advancedwaypoints.service.ResourcePackService;
 import com.mousejava.advancedwaypoints.service.WaypointsService;
-import com.mousejava.advancedwaypoints.utils.MessageUtils;
-import com.mousejava.advancedwaypoints.utils.Scheduler;
+import com.mousejava.advancedwaypoints.util.MessageUtil;
+import com.mousejava.advancedwaypoints.util.Scheduler;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
@@ -81,10 +81,10 @@ public class WaypointsCommand implements ICommand {
 
     private int executeHelp(CommandContext<CommandSourceStack> ctx, CommandSender sender) {
         if (sender instanceof Player) {
-            MessageUtils.sendMiniMessageIfPresent(sender, "messages.point.help");
+            MessageUtil.sendMiniMessageIfPresent(sender, "messages.point.help");
         } else {
             String prefix = plugin.getPluginMeta().getLoggerPrefix();
-            MessageUtils.sendMiniMessageTransformed(sender, "messages.point.help",
+            MessageUtil.sendMiniMessageTransformed(sender, "messages.point.help",
                     msg -> Arrays.stream(msg.split("\n"))
                             .map(line -> "[%s] %s".formatted(prefix, line))
                             .collect(Collectors.joining("\n"))
@@ -101,7 +101,7 @@ public class WaypointsCommand implements ICommand {
     private int executeReload(CommandContext<CommandSourceStack> ctx, CommandSender sender) {
         plugin.reloadConfig();
         complete(sender, CompletableFuture.allOf(waypointsService.reload(), playersService.reload()), ignored ->
-                MessageUtils.sendMiniMessageIfPresent(sender, "messages.point.reload.reload_successfully"));
+                MessageUtil.sendMiniMessageIfPresent(sender, "messages.point.reload.reload_successfully"));
         return Command.SINGLE_SUCCESS;
     }
 
@@ -114,10 +114,10 @@ public class WaypointsCommand implements ICommand {
     private int executeResourcePackGenerate(CommandContext<CommandSourceStack> ctx, CommandSender sender) {
         try {
             resourcePackService.generateDefaultAssets();
-            MessageUtils.sendMiniMessageIfPresent(sender, "messages.point.resourcepack.generate_success");
+            MessageUtil.sendMiniMessageIfPresent(sender, "messages.point.resourcepack.generate_success");
         } catch (IOException exception) {
             plugin.getLogger().log(Level.SEVERE, "Failed to generate default resource pack assets", exception);
-            MessageUtils.sendMiniMessageIfPresent(sender, "messages.point.resourcepack.processing_failed");
+            MessageUtil.sendMiniMessageIfPresent(sender, "messages.point.resourcepack.processing_failed");
         }
 
         return Command.SINGLE_SUCCESS;
@@ -126,10 +126,10 @@ public class WaypointsCommand implements ICommand {
     private int executeResourcePackBuild(CommandContext<CommandSourceStack> ctx, CommandSender sender) {
         try {
             resourcePackService.buildResourcePack();
-            MessageUtils.sendMiniMessageIfPresent(sender, "messages.point.resourcepack.build_success");
+            MessageUtil.sendMiniMessageIfPresent(sender, "messages.point.resourcepack.build_success");
         } catch (IOException exception) {
             plugin.getLogger().log(Level.SEVERE, "Failed to build resource pack", exception);
-            MessageUtils.sendMiniMessageIfPresent(sender, "messages.point.resourcepack.processing_failed");
+            MessageUtil.sendMiniMessageIfPresent(sender, "messages.point.resourcepack.processing_failed");
         }
 
         return Command.SINGLE_SUCCESS;
@@ -149,7 +149,7 @@ public class WaypointsCommand implements ICommand {
 
         int limit = IntegerArgumentType.getInteger(ctx, "limit");
         complete(sender, playersService.setLimit(profile.uuid(), limit), ignored ->
-                MessageUtils.sendMiniMessageTransformed(sender, "messages.point.limit.limit_updated", text -> text,
+                MessageUtil.sendMiniMessageTransformed(sender, "messages.point.limit.limit_updated", text -> text,
                         TagResolver.resolver(Placeholder.unparsed("player", profile.nickname()),
                                 Placeholder.unparsed("limit", Integer.toString(limit)))));
 
@@ -167,7 +167,7 @@ public class WaypointsCommand implements ICommand {
 
     private int executePersonalInfo(CommandContext<CommandSourceStack> ctx, Player player) {
         complete(player, playersService.register(player.getUniqueId(), player.getName()), ignored ->
-                MessageUtils.sendMiniMessageTransformed(player, "messages.point.personal.info", text -> text
+                MessageUtil.sendMiniMessageTransformed(player, "messages.point.personal.info", text -> text
                         .replaceAll("<hex>", personalWaypointService.getCurrentColor(player))));
         return Command.SINGLE_SUCCESS;
     }
@@ -180,7 +180,7 @@ public class WaypointsCommand implements ICommand {
 
         complete(player, personalWaypointService.setColor(player, color), ignored -> {
             personalWaypointService.apply(player);
-            MessageUtils.sendMiniMessageTransformed(player, "messages.point.personal.color_updated", text -> text
+            MessageUtil.sendMiniMessageTransformed(player, "messages.point.personal.color_updated", text -> text
                     .replaceAll("<hex>", color.toUpperCase(Locale.ROOT)));
         });
 
@@ -190,7 +190,7 @@ public class WaypointsCommand implements ICommand {
     private int executePersonalResetColor(CommandContext<CommandSourceStack> ctx, Player player) {
         complete(player, personalWaypointService.resetColor(player), ignored -> {
             personalWaypointService.apply(player);
-            MessageUtils.sendMiniMessageIfPresent(player, "messages.point.personal.reset.color");
+            MessageUtil.sendMiniMessageIfPresent(player, "messages.point.personal.reset.color");
         });
 
         return Command.SINGLE_SUCCESS;
@@ -215,7 +215,7 @@ public class WaypointsCommand implements ICommand {
             if (waypoint.isPresent())
                 sendWaypoint(player, "messages.point.create.created_successfully", waypoint.get());
             else
-                MessageUtils.sendMiniMessageIfPresent(player, "messages.point.create.limit_reached");
+                MessageUtil.sendMiniMessageIfPresent(player, "messages.point.create.limit_reached");
         });
 
         return Command.SINGLE_SUCCESS;
@@ -247,7 +247,7 @@ public class WaypointsCommand implements ICommand {
 
         complete(player, waypointsService.remove(uuid, player.getUniqueId()), removed -> {
             waypointsService.refresh(player);
-            MessageUtils.sendMiniMessageIfPresent(player, removed
+            MessageUtil.sendMiniMessageIfPresent(player, removed
                     ? "messages.point.remove.removed_successfully" : "messages.point.remove.not_found");
         });
 
@@ -269,7 +269,7 @@ public class WaypointsCommand implements ICommand {
         if (page < 1 || page > pages)
             return Cmd.usage(player, "messages.point.list.page_not_found");
 
-        MessageUtils.sendMiniMessageTransformed(player, "messages.point.list.header", text -> text,
+        MessageUtil.sendMiniMessageTransformed(player, "messages.point.list.header", text -> text,
                 Placeholder.unparsed("count", Integer.toString(waypoints.size())));
 
         int start = (page - 1) * PAGE_SIZE;
@@ -277,7 +277,7 @@ public class WaypointsCommand implements ICommand {
         waypoints.subList(start, end).forEach(waypoint -> sendWaypoint(player, "messages.point.list.entry", waypoint));
 
         if (pages > 1)
-            MessageUtils.sendMiniMessageTransformed(player, "messages.point.list.pagination", text -> text, TagResolver.resolver(
+            MessageUtil.sendMiniMessageTransformed(player, "messages.point.list.pagination", text -> text, TagResolver.resolver(
                     Placeholder.component("previous", pageArrow("previous", page - 1, page > 1)),
                     Placeholder.component("next", pageArrow("next", page + 1, page < pages)),
                     Placeholder.unparsed("page", Integer.toString(page)),
@@ -288,7 +288,7 @@ public class WaypointsCommand implements ICommand {
     }
 
     private Component pageArrow(String direction, int page, boolean enabled) {
-        Component arrow = MessageUtils.optionalMiniMessage("messages.point.list." + direction + (enabled ? "" : "_disabled"))
+        Component arrow = MessageUtil.optionalMiniMessage("messages.point.list." + direction + (enabled ? "" : "_disabled"))
                 .orElse(Component.empty());
         return arrow.clickEvent(enabled ? ClickEvent.runCommand("/point list " + page) : null);
     }
@@ -376,7 +376,7 @@ public class WaypointsCommand implements ICommand {
 
         complete(player, waypointsService.modify(uuid, player.getUniqueId(), action, value), modified -> {
             waypointsService.refresh(player);
-            MessageUtils.sendMiniMessageIfPresent(player, modified.isPresent()
+            MessageUtil.sendMiniMessageIfPresent(player, modified.isPresent()
                     ? "messages.point.modify.modified_successfully" : "messages.point.remove.not_found");
         });
         return Command.SINGLE_SUCCESS;
@@ -395,9 +395,9 @@ public class WaypointsCommand implements ICommand {
         Component uuid = Component.text(waypoint.uuid().toString())
                 .clickEvent(ClickEvent.copyToClipboard(waypoint.uuid().toString()));
 
-        uuid = uuid.hoverEvent(MessageUtils.optionalMiniMessage("messages.point.copy_uuid").orElse(Component.empty()));
+        uuid = uuid.hoverEvent(MessageUtil.optionalMiniMessage("messages.point.copy_uuid").orElse(Component.empty()));
 
-        MessageUtils.sendMiniMessageTransformed(player, path, text -> text, TagResolver.resolver(
+        MessageUtil.sendMiniMessageTransformed(player, path, text -> text, TagResolver.resolver(
                 Placeholder.component("uuid", uuid),
                 Placeholder.unparsed("style", waypoint.style()),
                 Placeholder.unparsed("world", waypoint.world()),
@@ -417,7 +417,7 @@ public class WaypointsCommand implements ICommand {
 
             Runnable callback = () -> {
                 if (error != null)
-                    MessageUtils.sendMiniMessageIfPresent(sender, "messages.point.command_failed");
+                    MessageUtil.sendMiniMessageIfPresent(sender, "messages.point.command_failed");
                 else
                     action.accept(result);
             };
